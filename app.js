@@ -1,0 +1,5 @@
+
+function iniciarApp ()
+{
+    alert("Hola");
+}
