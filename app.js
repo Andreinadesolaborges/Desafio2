@@ -2,44 +2,67 @@
 let monedasJugador = 2000;
 let subTotal;
 let seleccion;
-const precioBaston = 950;
-const precioEspada = 500;
-const precioHacha = 550;
-let comprar = true;
+let precioBaston = 950;
+let precioEspada = 500;
+let precioHacha = 550;
+let salir;
+let ganador = false;
+let porcentaje = 30;
+let descuentoAplicado = porcentaje / 100;
+let primeraRonda = true;
+
 
 function iniciarApp ()
 {   
     do {
-
-        alert ("Tienda de objetos - Elige los objetos que quieres comprar:");
-
-        let comprar=false;
-
-        while (comprar!= true) {
-            seleccion = prompt("Baston ("+ precioBaston + ") / Espada ("+ precioEspada +") / Hacha ("+ precioHacha +").");
-            console.log (seleccion);
-            seleccion = seleccion.toLowerCase();
-            console.log (seleccion);
-
-            if (seleccion == "baston" || seleccion == "espada" || seleccion == "hacha")
-            {
-                calcularSubTotal();
-                comprarItem ();
-            }
-            else {
-                alert ("No es un item válido...");
-            }
-            
-            comprar = prompt ("Escribe 'si' si quieres seguir comprando en la tienda.");
-            comprar = comprar.toLowerCase();
-            if (comprar == "si"){
-                comprar = false;
-            }
-            else {
-                comprar = true;
-            }
+        alert ("Tienda de objetos - Monedas del jugador: " + monedasJugador + " - Elige los objetos que quieres comprar:");
+        seleccion = prompt("Baston ("+ precioBaston + ") / Espada ("+ precioEspada +") / Hacha ("+ precioHacha +").");
+        
+      
+        if (seleccion == null){
+            return; 
         }
-    } while (comprar != true)
+
+        seleccion = seleccion.toLowerCase();
+
+        if (seleccion == "baston" || seleccion == "espada" || seleccion == "hacha")
+        {
+            calcularSubTotal();
+            salirItem ();
+         
+            if (primeraRonda == true)
+            {
+                calculoAleatorio ();
+            }
+            if (ganador == true)
+            {
+                alert ("Te has ganado un " + porcentaje +"% de descuento.");
+                eventoDescuento ();
+                ganador = false;
+            }
+            primeraRonda = false;
+        }
+        else {
+            alert ("No es un item válido...");
+        }
+        
+        salir = prompt ("Escribe 'si' si quieres seguir comprando en la tienda.");
+        
+
+        if (salir == null){
+            return; 
+        }
+        
+        salir = salir.toLowerCase();
+
+        if (salir == "si"){
+            salir = false; 
+        }
+        else {
+            salir = true;
+            alert ("¡Gracias por tu compra!");
+        }       
+    } while (salir != true)
 }
 
 function calcularSubTotal(){
@@ -63,7 +86,7 @@ function calcularSubTotal(){
 
 }
 
-function comprarItem ()
+function salirItem ()
 {
     if (subTotal <= monedasJugador)
     {
@@ -71,10 +94,30 @@ function comprarItem ()
         alert ("Has comprado el item. Tienes " + monedasJugador + " monedas disponibles.");
     }
     else if (subTotal > monedasJugador) {
-        alert ("No tienes suficientes monedas para comprar este item.");
+        alert ("No tienes suficientes monedas para salir este item.");
     } 
     else {
         alert ("error.");
     }
 }
 
+function calculoAleatorio ()
+{
+    const numeroRandom = Math.floor(Math.random() * 2 + 1);
+    console.log (numeroRandom);
+    if (numeroRandom == 1)
+    {
+        ganador = true;
+    }
+    else 
+    {
+        ganador = false;
+    }
+}
+
+function eventoDescuento ()
+{
+    precioBaston = precioBaston - precioBaston * descuentoAplicado;
+    precioEspada = precioEspada - precioEspada * descuentoAplicado;
+    precioHacha = precioHacha - precioHacha * descuentoAplicado;
+}
