@@ -41,6 +41,8 @@ function iniciarApp ()
                 ganador = false;
             }
             primeraRonda = false;
+            const elementMonedas = document.getElementById("monedas-jugador");
+            elementMonedas.innerHTML = "Monedas jugador: " + monedasJugador;
         }
         else {
             alert ("No es un item válido...");
@@ -52,7 +54,7 @@ function iniciarApp ()
         if (salir == null){
             return; 
         }
-        
+
         salir = salir.toLowerCase();
 
         if (salir == "si"){
@@ -118,6 +120,12 @@ function calculoAleatorio ()
 function eventoDescuento ()
 {
     precioBaston = precioBaston - precioBaston * descuentoAplicado;
+    const element1 = document.getElementById("precio-1");
+    element1.innerHTML = precioBaston;
     precioEspada = precioEspada - precioEspada * descuentoAplicado;
+    const element2 = document.getElementById("precio-2");
+    element2.innerHTML = precioEspada;
     precioHacha = precioHacha - precioHacha * descuentoAplicado;
+    const element3 = document.getElementById("precio-3");
+    element3.innerHTML = precioHacha;
 }
